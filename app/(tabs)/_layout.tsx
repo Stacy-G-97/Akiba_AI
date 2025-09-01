@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { BarChart, Home, Package, TrendingUp, Users } from 'lucide-react-native';
+import { BarChart, Home, Package, TrendingUp, Users, Crown } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
@@ -67,6 +67,15 @@ export default function TabLayout() {
           title: 'Community',
           tabBarIcon: ({ size, color }) => (
             <Users size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="subscription"
+        options={{
+          title: 'Premium',
+          tabBarIcon: ({ size, color }) => (
+            <Crown size={size} color={color} />
           ),
         }}
       />
