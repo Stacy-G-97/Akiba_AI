@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { BarChart, Home, Package, TrendingUp, Users, Crown } from 'lucide-react-native';
+import { ChartBar as BarChart, Chrome as Home, Package, TrendingUp, Users, Crown } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
