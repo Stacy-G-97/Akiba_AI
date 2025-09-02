@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Modal } from 'react-native';
-import { Search, Plus, Package, Calendar, CircleAlert as AlertCircle, Save, Wifi, WifiOff } from 'lucide-react-native';
+import { Search, Plus, Package, Calendar, AlertCircle, Save, Wifi, WifiOff } from 'lucide-react-native';
 import SafeAreaContainer from '@/components/SafeAreaContainer';
 import Header from '@/components/Header';
 import Card from '@/components/Card';

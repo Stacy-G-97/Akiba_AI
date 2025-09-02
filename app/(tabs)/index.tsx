@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { TriangleAlert as AlertTriangle, TrendingDown, TrendingUp, Package, DollarSign, Wifi, WifiOff, Brain } from 'lucide-react-native';
+import { AlertTriangle, TrendingDown, TrendingUp, Package, DollarSign, Wifi, WifiOff, Brain } from 'lucide-react-native';
 import SafeAreaContainer from '@/components/SafeAreaContainer';
 import Header from '@/components/Header';
 import Card from '@/components/Card';

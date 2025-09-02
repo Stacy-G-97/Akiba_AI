@@ -101,27 +101,15 @@ export class PaymentService {
         throw new Error('Invalid payment plan');
       }
 
-      // SECURITY: Never expose API keys in client code
-      // This would call your backend API endpoint
-      const response = await fetch('/api/payments/initialize', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${await this.getAuthToken()}`
-        },
-        body: JSON.stringify({
-          planId,
-          userEmail,
-          amount: plan.price,
-          currency: plan.currency
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Payment initialization failed');
-      }
-
-      const result = await response.json();
+      // DEMO: Simulate IntaSend payment initialization
+      // In production, this would call your secure backend API
+      const transactionId = `akiba_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      const result = {
+        transactionId,
+        checkoutUrl: `https://sandbox.intasend.com/checkout/${transactionId}`,
+        status: 'pending'
+      };
       
       return {
         success: true,
@@ -144,18 +132,13 @@ export class PaymentService {
    */
   static async verifyPayment(transactionId: string): Promise<PaymentResult> {
     try {
-      const response = await fetch(`/api/payments/verify/${transactionId}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${await this.getAuthToken()}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Payment verification failed');
-      }
-
-      const result = await response.json();
+      // DEMO: Simulate payment verification
+      // In production, this would verify with IntaSend API
+      const result = {
+        status: 'completed',
+        transactionId,
+        planId: 'pro' // This would come from actual payment data
+      };
       
       if (result.status === 'completed') {
         // Update local subscription status
@@ -202,17 +185,8 @@ export class PaymentService {
       }
       
       // Fetch from server if not cached
-      const response = await fetch('/api/user/subscription', {
-        headers: {
-          'Authorization': `Bearer ${await this.getAuthToken()}`
-        }
-      });
-      
-      if (response.ok) {
-        const subscription = await response.json();
-        await AsyncStorage.setItem('user_subscription', JSON.stringify(subscription));
-        return subscription;
-      }
+      // DEMO: In production, this would fetch from your backend
+      // For now, return null to indicate no active subscription
       
       return null;
       
@@ -300,24 +274,15 @@ export class PaymentService {
    */
   static async cancelSubscription(): Promise<boolean> {
     try {
-      const response = await fetch('/api/user/subscription/cancel', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${await this.getAuthToken()}`
-        }
-      });
-
-      if (response.ok) {
-        // Update local cache
-        const subscription = await this.getUserSubscription();
-        if (subscription) {
-          subscription.status = 'cancelled';
-          await AsyncStorage.setItem('user_subscription', JSON.stringify(subscription));
-        }
-        return true;
+      // DEMO: Simulate subscription cancellation
+      // In production, this would call your backend API
+      const subscription = await this.getUserSubscription();
+      if (subscription) {
+        subscription.status = 'cancelled';
+        await AsyncStorage.setItem('user_subscription', JSON.stringify(subscription));
       }
       
-      return false;
+      return true;
       
     } catch (error) {
       console.error('Error cancelling subscription:', error);
