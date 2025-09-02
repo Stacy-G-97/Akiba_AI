@@ -57,7 +57,7 @@ export default function TabLayout() {
         options={{
           title: 'Analytics',
           tabBarIcon: ({ size, color }) => (
-            <BarChart2 size={size} color={color} />
+            <BarChart size={size} color={color} />
           ),
         }}
       />
