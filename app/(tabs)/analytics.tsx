@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
-import { BarChart2, TrendingDown, DollarSign, Target, Calendar } from 'lucide-react-native';
+import { ChartBar as BarChart2, TrendingDown, DollarSign, Target, Calendar } from 'lucide-react-native';
 import SafeAreaContainer from '@/components/SafeAreaContainer';
 import Header from '@/components/Header';
 import Card from '@/components/Card';
