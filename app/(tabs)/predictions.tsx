@@ -1,10 +1,12 @@
+"use client";
+
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { TrendingUp, TrendingDown, Calendar, Target, Brain, Wifi, WifiOff, RefreshCw } from 'lucide-react-native';
 import SafeAreaContainer from '@/components/SafeAreaContainer';
 import Header from '@/components/Header';
 import Card from '@/components/Card';
-import { PredictionEngine } from '@/services/DataService';
+// PredictionEngine is available in services but not used in this UI component.
 import { OfflineService } from '@/services/OfflineService';
 
 interface PredictionItem {
@@ -102,11 +104,6 @@ export default function Predictions() {
   const overallAccuracy = 87;
   const totalPredictions = predictions.length;
 
-  /**
-   * BEGINNER EXPLANATION:
-   * This function refreshes predictions using our AI engine
-   * It works offline by using cached data
-   */
   const refreshPredictions = async () => {
     setIsLoading(true);
     
@@ -247,8 +244,9 @@ export default function Predictions() {
           <View style={styles.predictionsSection}>
             <Text style={styles.sectionTitle}>Demand Predictions</Text>
             
-            {predictions.map((prediction) => (
-              <Card key={prediction.id} style={styles.predictionCard}>
+            {predictions.map((prediction: PredictionItem) => (
+              <React.Fragment key={prediction.id}>
+              <Card style={styles.predictionCard}>
                 <View style={styles.predictionHeader}>
                   <View style={styles.predictionInfo}>
                     <Text style={styles.predictionItem}>{prediction.item}</Text>
@@ -315,6 +313,7 @@ export default function Predictions() {
                   </Text>
                 </View>
               </Card>
+              </React.Fragment>
             ))}
           </View>
 

@@ -9,6 +9,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import { EncryptionService } from './EncryptionService';
 
 export interface SecurityConfig {
   maxLoginAttempts: number;
@@ -191,14 +192,16 @@ export class SecurityService {
 
   /**
    * Encrypt sensitive data before storage
-   * SECURITY: Protects data even if device is compromised
+   * SECURITY: Uses production-ready encryption with hardware backing
    */
   static async encryptData(data: string): Promise<string> {
     try {
-      // In production, use proper encryption library like react-native-keychain
-      // For demo purposes, we'll use base64 encoding (NOT secure for production)
       if (this.SECURITY_CONFIG.dataEncryption) {
-        return btoa(data); // Base64 encoding - replace with real encryption
+        const result = await EncryptionService.encryptData(data);
+        if (result.success && result.data) {
+          return result.data;
+        }
+        throw new Error(result.error || 'Encryption failed');
       }
       return data;
     } catch (error) {
@@ -209,12 +212,16 @@ export class SecurityService {
 
   /**
    * Decrypt sensitive data after retrieval
-   * SECURITY: Decrypts data for use in app
+   * SECURITY: Uses production-ready decryption with hardware backing
    */
   static async decryptData(encryptedData: string): Promise<string> {
     try {
       if (this.SECURITY_CONFIG.dataEncryption) {
-        return atob(encryptedData); // Base64 decoding - replace with real decryption
+        const result = await EncryptionService.decryptData(encryptedData);
+        if (result.success && result.data) {
+          return result.data;
+        }
+        throw new Error(result.error || 'Decryption failed');
       }
       return encryptedData;
     } catch (error) {
