@@ -11,31 +11,25 @@ export default function OfflineIndicator({ isOnline, show = true }: OfflineIndic
   const fadeAnim = React.useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
-    if (show) {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    }
+    Animated.timing(fadeAnim, {
+      toValue: show ? 1 : 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
   }, [show, fadeAnim]);
 
   if (!show) return null;
 
   return (
-    <Animated.View style={[
-      styles.container,
-      { 
-        backgroundColor: isOnline ? '#10B981' : '#EF4444',
-        opacity: fadeAnim,
-      }
-    ]}>
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          backgroundColor: isOnline ? '#10B981' : '#EF4444',
+          opacity: fadeAnim,
+        },
+      ]}
+    >
       <View style={styles.content}>
         {isOnline ? (
           <Wifi size={16} color="#FFFFFF" />
@@ -64,11 +58,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
   },
   text: {
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
+    marginLeft: 8,
   },
 });
